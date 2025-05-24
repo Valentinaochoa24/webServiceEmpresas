@@ -60,7 +60,7 @@ Ejemplos de Uso y Respuestas
 }
 ```
 
----
+
 
 🔹 GET `/api/empresas/899`
 **Respuesta exitosa:**
@@ -78,7 +78,7 @@ Ejemplos de Uso y Respuestas
 }
 ```
 
----
+
 
 🔹 POST `/api/empresas`
 **Body:**
@@ -104,8 +104,6 @@ Ejemplos de Uso y Respuestas
   }
 }
 ```
-
----
 
 🔹 PUT `/api/empresas/900`
 **Body:**
@@ -153,6 +151,7 @@ Solo se elimina si `estado = Inactivo`
     "estado": "Activo"
   }
 }
+```
 
 Manejo de errores
 
