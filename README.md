@@ -1,61 +1,181 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Web Service Gestión de Empresas
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este proyecto fue desarrollado en Laravel para gestionar empresas mediante Web Services (API REST).
 
-## About Laravel
+## Funcionalidades
+- Crear empresa (por defecto en estado 'Activo')
+- Actualizar datos (nombre, dirección, teléfono, estado)
+- Consultar empresa por NIT
+- Consultar todas las empresas
+- Eliminar empresas con estado 'Inactivo'
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Requisitos
+- PHP 8.x
+- Composer
+- Laravel 10 o 12
+- MySQL / MariaDB
+- Postman (para probar la API)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Instalación
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```bash
+git clone https://github.com/Valentinaochoa24/webServiceEmpresas.git
+cd webServiceEmpresas
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+DOCUMENTACION
+Endpoints de la API
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Método	Ruta	                Acción
+GET	    /api/empresas	        Obtener todas las empresas
+GET	    /api/empresas/{nit}	    Obtener empresa por NIT
+POST	/api/empresas/store	    Crear nueva empresa
+PUT	    /api/empresas/{nit}	    Actualizar empresa por NIT
+DELETE	/api/empresas/{nit}	    Eliminar empresa (solo si está inactiva)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Endpoints de la API
 
-## Laravel Sponsors
+Ejemplos de Uso y Respuestas
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+🔹 GET `/api/empresas`
+**Respuesta:**
+```json
+{
+  "success": true,
+  "message": "Proceso exitoso",
+  "data": [
+    {
+      "nit": "899",
+      "nombre": "GlobalTech Ltda",
+      "direccion": "Av Siempre Viva 742",
+      "telefono": "315123456",
+      "estado": "Activo"
+    }
+  ]
+}
+```
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+🔹 GET `/api/empresas/899`
+**Respuesta exitosa:**
+```json
+{
+  "success": true,
+  "message": "Proceso exitoso",
+  "data": {
+    "nit": "899",
+    "nombre": "GlobalTech Ltda",
+    "direccion": "Av Siempre Viva 742",
+    "telefono": "315123456",
+    "estado": "Activo"
+  }
+}
+```
 
-## Contributing
+---
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+🔹 POST `/api/empresas`
+**Body:**
+```json
+{
+  "nit": "900",
+  "nombre": "TechNova",
+  "direccion": "Calle 123",
+  "telefono": "3123456789"
+}
+```
+**Respuesta:**
+```json
+{
+  "success": true,
+  "message": "Proceso exitoso",
+  "data": {
+    "nit": "900",
+    "nombre": "TechNova",
+    "direccion": "Calle 123",
+    "telefono": "3123456789",
+    "estado": "Activo"
+  }
+}
+```
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+🔹 PUT `/api/empresas/900`
+**Body:**
+```json
+{
+  "nombre": "TechNova Updated",
+  "direccion": "Carrera 45",
+  "telefono": "3000000000"
+}
+```
+**Respuesta:**
+```json
+{
+  "success": true,
+  "message": "Proceso exitoso",
+  "data": {
+    "nit": "900",
+    "nombre": "TechNova Updated",
+    "direccion": "Carrera 45",
+    "telefono": "3000000000",
+    "estado": "Activo"
+  }
+}
+```
 
-## Security Vulnerabilities
+🔹 DELETE `/api/empresas/900`
+Solo se elimina si `estado = Inactivo`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**Respuesta exitosa:**
+```json
+{
+  "success": true,
+  "message": "Proceso exitoso",
+  "data": ""
+}
+```
 
-## License
+**Respuesta fallida (empresa activa):**
+```json
+{
+  "success": false,
+  "message": "La empresa se encuentra activa",
+  "data": {
+    "nit": "900",
+    "estado": "Activo"
+  }
+}
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Manejo de errores
+
+- **Validación fallida:**
+```json
+{
+  "success": false,
+  "message": "Validación fallida",
+  "data": {
+    "telefono": ["El campo teléfono es obligatorio."]
+  }
+}
+```
+
+**No se encuentra el NIT:**
+```json
+{
+  "success": false,
+  "message": "No hay datos disponibles para el id:900",
+  "data": ""
+}
+```
+Autor
+
+**Valentina Ochoa**  
+💻 [GitHub](https://github.com/Valentinaochoa24)
